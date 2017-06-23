@@ -62,10 +62,14 @@ func loginMatrix() {
 func matrixSendMsg(senderScreenName string, message string, createdAt string) {
 	txnId := strconv.Itoa(rand.Int())
 	c.Green(txnId)
+
+	anonName := anonymousName(senderScreenName, createdAt)
+	hour := dateToHour(createdAt)
+
 	url := matrixConfig.Server + "/_matrix/client/r0/rooms/" + matrixConfig.RoomId + "/send/m.room.message/" + txnId + "?access_token=" + matrixToken.AccessToken
 	jsonStr := `{
-		"body":"[NEW DM] - at ` + createdAt + `\n@` + senderScreenName + `: ` + message + `",
-		"msgtype":"m.text"
+		"body":"[NEW DM] - at ` + hour + `h\n@` + anonName + `: ` + message + `",
+		"msgtype":"m.notice"
 	}`
 	b := strings.NewReader(jsonStr)
 	req, _ := http.NewRequest("PUT", url, b)

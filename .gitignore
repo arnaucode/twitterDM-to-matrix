@@ -27,3 +27,4 @@ _testmain.go
 twitterConfig.json
 matrixConfig.json
 temp
+*.txt
